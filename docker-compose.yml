@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  pgadmin4:
+    image: elestio/pgadmin:latest
+    restart: always
+    environment:
+     - PGADMIN_DEFAULT_EMAIL=dev@domain.com
+     - PGADMIN_DEFAULT_PASSWORD=P@ssword123
+    ports:
+        - 8888:80
+    volumes:
+        - pgadmin:/var/lib/pgadmin 
+ 
+  postgres:
+    image: postgres
+    environment:
+        - POSTGRES_PASSWORD=P@ssword123
+    ports:
+        - 5432:5432
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+
+volumes:
+    pgadmin:    
+    pgdata:
