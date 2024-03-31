@@ -1,4 +1,5 @@
 using System.Net;
+using Contracts;
 using MassTransit;
 using Polly;
 using Polly.Extensions.Http;
@@ -13,11 +14,31 @@ builder.Services.AddHttpClient<AuctionServiceHttpClient>().AddPolicyHandler(GetP
 builder.Services.AddMassTransit(config =>
 {
    config.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
+   config.AddConsumersFromNamespaceContaining<AuctionUpdatedConsumer>();
+   config.AddConsumersFromNamespaceContaining<AuctionDeletedConsumer>();
 
    config.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
 
    config.UsingRabbitMq((context, cfg) =>
    {
+      cfg.ReceiveEndpoint("search-auction-created", e =>
+      {
+         e.UseMessageRetry(r => r.Interval(5, 5));
+         e.ConfigureConsumer<AuctionCreatedConsumer>(context);
+      });
+
+      cfg.ReceiveEndpoint("search-auction-update", e =>
+      {
+         e.UseMessageRetry(r => r.Interval(5, 5));
+         e.ConfigureConsumer<AuctionUpdatedConsumer>(context);
+      });
+
+      cfg.ReceiveEndpoint("search-auction-deleted", e =>
+      {
+         e.UseMessageRetry(r => r.Interval(5, 5));
+         e.ConfigureConsumer<AuctionDeletedConsumer>(context);
+      });
+
       cfg.ConfigureEndpoints(context);
    });
 });
