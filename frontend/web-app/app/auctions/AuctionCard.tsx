@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
-import CountdownTimer from './CountDownTimer'
+import CountdownTimer from './CountdownTimer'
 
 type Props = {
    auction: any
