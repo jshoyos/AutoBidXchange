@@ -1,24 +1,17 @@
-'use client'
 import React from 'react'
-import Image from 'next/image'
 import CountdownTimer from './CountdownTimer'
+import CardImage from './CardImage'
+import { Auction } from '@/types'
 
 type Props = {
-   auction: any
+   auction: Auction
 }
 
 export default function AuctionCard({ auction }: Props) {
    return (
-      <a href='#'>
-         <div className='relative w-full bg-gray-200 aspect-video rounded-lg overflow-hidden'>
-            <Image
-               src={auction.imageUrl}
-               alt={`image of ${auction.make} ${auction.model} in ${auction.color}`}
-               fill
-               priority
-               className='object-cover'
-               sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
-            />
+      <a href='#' className='group'>
+         <div className='relative w-full bg-gray-200 aspect-[16/10] rounded-lg overflow-hidden'>
+            <CardImage auction={auction}/>
             <div className='absolute bottom-2 left-2'>
                <CountdownTimer auctionEnd={auction.auctionEnd} />
             </div>
