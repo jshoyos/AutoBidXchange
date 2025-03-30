@@ -30,7 +30,7 @@ internal static class HostingExtensions
 
                 if(builder.Environment.IsEnvironment("Docker"))
                 {
-                    options.IssuerUri = "identity-svc";
+                    options.IssuerUri = "http://localhost:5000";
                 } 
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)

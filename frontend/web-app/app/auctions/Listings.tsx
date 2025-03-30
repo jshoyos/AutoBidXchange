@@ -17,7 +17,7 @@ export default function Listings() {
       pageSize: state.pageSize,
       searchTerm: state.searchTerm,
       orderBy: state.orderBy,
-      FillterBy: state.FillterBy
+      FilterBy: state.FilterBy
    })));
 
    const setParams = useParamsStore(state => state.setParams);
