@@ -7,7 +7,7 @@ type Props = {
     auction: Auction;
 }
 
-export default function CardImage({auction}: Props) {
+export default function CarImage({auction}: Props) {
     const [isLoading, setLoading] = useState(true);
 
     return (
