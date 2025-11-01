@@ -1,30 +1,18 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-EXPOSE 80
 
-# copy all .csproj files and restore as distinct layers. Use of the same COPY command for every dockerfile
-# in the project to take advantage of docker caching
-COPY AutoBidXchange.sln AutoBidXchange.sln
-COPY src/AuctionService/AuctionService.csproj src/AuctionService/AuctionService.csproj
-COPY src/SearchService/SearchService.csproj src/SearchService/SearchService.csproj
-COPY src/GatewayService/GatewayService.csproj src/GatewayService/GatewayService.csproj
-COPY src/BiddingService/BiddingService.csproj src/BiddingService/BiddingService.csproj
-COPY src/IdentityService/IdentityService.csproj src/IdentityService/IdentityService.csproj
-COPY src/Contracts/Contracts.csproj src/Contracts/Contracts.csproj
-COPY tests/AuctionService.IntegrationTests/AuctionService.IntegrationTests.csproj tests/AuctionService.IntegrationTests/AuctionService.IntegrationTests.csproj
-COPY tests/AuctionService.UnitTests/AuctionService.UnitTests.csproj tests/AuctionService.UnitTests/AuctionService.UnitTests.csproj
+COPY AutoBidXchange.sln ./
+COPY src/SearchService/SearchService.csproj ./src/SearchService/
+COPY src/Contracts/Contracts.csproj ./src/Contracts/
 
-# Restore package steps
-RUN dotnet restore AutoBidXchange.sln
+RUN dotnet restore ./src/SearchService/SearchService.csproj
 
-# Copy the app folders folder
-COPY src/SearchService src/SearchService
-COPY src/Contracts src/Contracts
-WORKDIR /app/src/SearchService
-RUN dotnet publish -c Release -o /app/src/out
+COPY . . 
+RUN dotnet publish ./src/SearchService/SearchService.csproj -c Release -o /app/publish
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+# Runtime Stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/src/out .
+EXPOSE 80
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "SearchService.dll"]
