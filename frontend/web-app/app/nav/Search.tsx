@@ -21,17 +21,7 @@ export default function Search() {
         <input
             type='text'
             placeholder='Search for cars by make, model, color'
-            className='
-                flex-grow
-                pl-5
-                bg-transparent
-                border-none
-                focus:border-transparent
-                focus:ring-0
-                focus:outline-none
-                text-sm
-                text-gray-600
-            '
+            className='input-custom'
             onChange={onChange}
             onKeyDown={(e: any) => {
                 if (e.key === 'Enter') search();
