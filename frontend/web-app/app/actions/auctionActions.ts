@@ -1,5 +1,4 @@
 'use server'
-import { auth } from '@/auth';
 import { Auction, Bid, PagedResult } from '@/types';
 import { fetchWrapper } from '../lib/fetchWrapper';
 import { FieldValues } from 'react-hook-form';

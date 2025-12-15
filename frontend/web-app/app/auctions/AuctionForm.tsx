@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, TextInput } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 import React, { useEffect } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import Input from '../components/Input';
@@ -18,7 +18,7 @@ export default function AuctionForm({auction}: Props) {
     const router = useRouter();
     const pathname = usePathname();
     const {control, handleSubmit, setFocus, reset,
-        formState: {isSubmitting, isValid, isDirty, errors}} = useForm({
+        formState: {isSubmitting, isValid}} = useForm({
             mode: 'onTouched'
         });
 

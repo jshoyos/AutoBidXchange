@@ -6,18 +6,19 @@ import { useAuctionStore } from "../hooks/useAuctionStore";
 import { useBidStore } from "../hooks/useBidStore";
 import { useParams } from "next/navigation";
 import { Auction, AuctionFinished, Bid } from "@/types";
-import { User } from "next-auth";
 import toast from "react-hot-toast";
 import AuctionCreatedToast from "../components/AuctionCreatedToast";
 import { getDetailedViewData } from "../actions/auctionActions";
 import AuctionFinishedToast from "../components/AuctionFinishedToast";
+import { useSession } from "next-auth/react";
 
 type Props = {
-    children: ReactNode;
-    user: User | null;
+    children: ReactNode
 }
 
-export default function SignalRProvider({ children, user }: Props) {
+export default function SignalRProvider({ children }: Props) {
+    const session = useSession();
+    const user = session.data?.user;
     const connection = useRef<HubConnection | null>(null);
     const setCurrentPrice = useAuctionStore((state) => state.setCurrentPrice);
     const addBid = useBidStore((state) => state.addBid);
@@ -51,7 +52,7 @@ export default function SignalRProvider({ children, user }: Props) {
     useEffect(() => {
         if (!connection.current) {
             connection.current = new HubConnectionBuilder()
-                .withUrl('http://localhost:6001/notifications')
+                .withUrl(process.env.NEXT_PUBLIC_NOTIFY_URL!)
                 .withAutomaticReconnect()
                 .build();
 

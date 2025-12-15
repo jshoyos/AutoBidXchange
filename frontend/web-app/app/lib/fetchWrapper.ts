@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 
-const baseUrl = 'http://localhost:6001/';
+const baseUrl = process.env.API_URL;
 
 const get = async (url: string) => {
     const requestOptions = {
@@ -12,7 +12,7 @@ const get = async (url: string) => {
     return handleResponse(response);
 }
 
-const post = async (url: string, body: {}) => {
+const post = async (url: string, body: object) => {
     const requestOptions = {
         method: 'POST',
         headers: await getHeaders(),
@@ -23,7 +23,7 @@ const post = async (url: string, body: {}) => {
     return handleResponse(response);
 }
 
-const put = async (url: string, body: {}) => {
+const put = async (url: string, body: object) => {
     const requestOptions = {
         method: 'PUT',
         headers: await getHeaders(),

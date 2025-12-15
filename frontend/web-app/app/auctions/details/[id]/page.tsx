@@ -7,7 +7,6 @@ import DetailedSpecs from './DetailedSpecs';
 import EditButton from './EditButton';
 import { getCurrentUser } from '@/app/actions/authActions';
 import DeleteButton from './DeleteButton';
-import BidItem from './BidItem';
 import BidList from './BidList';
 
 export default async function Details({params} : {params: Promise<{id: string}> }) {
