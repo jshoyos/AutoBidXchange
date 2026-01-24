@@ -482,3 +482,12 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# certificate files
+*.crt
+*.cer
+*.pem
+*.pfx
+*.p12
+# Key files
+*.key
